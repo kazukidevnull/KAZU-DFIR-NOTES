@@ -11,10 +11,14 @@ NOTE: due to i am still trying to figure out best way to format and display ever
 {text}(THIS MAY CHANGE) = used to indicate information which is not fixed such as GUID, enconding or other information, Replace "text".
 + Sometimes there will be cases where all the information within something is of investigative interests, in these cases "TOI:" will just be listed with "ALL", in cases where there's a large amount of information within something which may be of interests except for a few parts, then the not equal symbol "=!" will be used at the start of the list of things to exclude
 
+### Windows PIDs:
+
+
+all windows PID's are divisible by 4, so system is always 4, pid 0 is reserved for the pseudo system idle process.
+
 ## files Found inside \\System32\\Config which are also found under "HKEY_LOCAL_MACHINE in the registry
 
-+ bbimigrate folder
-+ Jounal folder
++ Journal folder
 + RegBack folder: Used by windows for backup of certain config files
 + systemprofile folder
 + TxR folder
@@ -41,8 +45,197 @@ Following files are automatically backuped to the RegBack folder and is often mi
 + SOFTWARE
 + SYSTEM 
 
+## Powershell Transcription logs
+
+PTS are captured input/output of powershell commands, disabled by default but can be enabled by group policy or enable it trough the registry which can be found at "HKLM\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription.
+
+alternatively you can use the following commands to change it for local host using CMD:
+
+reg add HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\PowerShell\Transcription /v EnableTranscripting /t REG_DWORD /d 0x1 /f
+reg add HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\PowerShell\Transcription /v OutputDirectory /t REG_SZ /d C:/ /f
+reg add HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\PowerShell\Transcription /v EnableInvocationHeader /t REG_DWORD /d 0x1 /f
+
+the logs can also be enabled for specific users only by making the change in "HKEY_CURRENT_USER" instead of "HKEY_LOCAL_MACHINE", altought this is not recommended.
+
+## Windows process genealogy
+
+### windows process startup order
+
+"System" starts "smss.exe" which starts the following processes before terminating itself(thus these have no parent)
+
++ csrss.exe 
++ wininit.exe 
++ winlogon.exe , 
+
+"wininit.exe" then are responsible to start the following processes
++ Services.exe
++ Lsass.exe
++ lsaiso.exe(on wind10+ and only when credential guard is enabled, functionality is the split between this and lsass.exe)
+
+Then Depending on what OS it is it "Services.exe" will then on win10+ start  
++ svchost.exe
+
+which will then start 
++ runtimebroker.exe
++ taskhost.exe
+
+or 
+
+"services.exe" for versions below win10 will start
++ svchost.exe
++ taskhost.exe
+
+regardlessy of the above,
+
+"winlogon.exe" meanwhile will start 
++ userinit
+
+which then starts
++ explorer.exe
 
 
+### Windows process details
+
+#### System
+
+System have no parent and technically does not exist as There's no such thing as "system.exe" file on the system or anything like that 
+
++ Number of expected instances are: 1 
++ Associated user account: local system
++ start time: boot time
++ will mostly contain drivers and other things resposible for kernal mode initilization such as the kernel exe itself
+
+#### smss.exe
+
+smss is the session manager service which is responsible for creating new sessions
+
++ Image path is: System Root(C:\\Windows\\System32)
++ Expected instance: 1 for the "master" instance and another for each child instance per session
++ Associated user account: local system
++ Start time: seconds within boot time for the master instance
+
+For each new session, smss.exe creates a new child instance, Once the child instance done it's work by initializing the new session by starting the "csrss.exe" (client server runtime subsystem) and then "wininit.exe" for session 0 and "windlogon.exe" for session 1 it terminates itself 
+
+#### csrss.exe
+
+it's the client server runtime subsystem resposible for implementing most of windows API and providing a lot of other windows features
+
++ image path: System Root(C:\\Windows\\System32)
++ parent process: smss.exe(which terminates itself and thus csrss shows no parent)
++ Expected instanced: 2 or more
++ Associated user accounts: local system
++ start time: seconds after boot for the first two instanced
+
+#### wininit.exe
+
+Is responsible for starting key background processes within session 0 which then starts service Control Manager (services.exe ) and "lsass.exe" (Local security authority subsystem service)
+
++ image path: System Root(C:\\Windows\\System32)
++ parent process: smss.exe(which terminates itself and thus wininit shows no parent)
++ Expected instanced: 1
++ Associated user accounts: local system
++ start time: seconds within boot time
+
+
+
+
+#### services.exe
+
+Responsible for implementing unified background process manager and service control manager(svchost.exe) which manager the services on the system  
+
++ image path: System Root(C:\\Windows\\System32)
++ parent process: wininit.exe
++ Expected instanced: 1
++ Associated user accounts: local system
++ start time: seconds within boot time
+
+#### svchost.exe
+
+Known as "the generic host process for windows services and is basically used for running service DLLs, it also have a number of parameters after the "-k" parameters which you should be familiar with and svchost without the "-k" parameter or unknown parameters after it are worth investigating.
+
++ image path: System Root(C:\\Windows\\System32)
++ parent process: services.exe
++ Expected instanced: numerous
++ Associated user accounts: vary, but will typically be local system, network service or local service, any others is worth investigating
++ start time: seconds after boot time but they can also be started after boot as needed
+
+
+#### runtimebroker.exe
+
+This part is only on win10 and above and used to facilitate universal interactions between universal windows platforms(UWPApps, which was formely know as metro apps) and the full windows API
+
+Credential Guard are used to protect secrets and other creditials used by systems or apps
+
++ image path: System Root(C:\\Windows\\System32\\runtimebroker.exe)
++ parent process: wininit.exe
++ Expected instanced: 0 when Credential Guard is disabled and 1 when enabled
++ Associated user accounts: local system 
++ start time: within seconds of boot time
+
+
+#### lsaiso.exe
+
+are closely related to lsass and 
+
++ image path: System Root(C:\\Windows\\System32\\lsaiso.exe)
++ parent process: svchost.exe
++ Expected instanced: normally a 1-1 mapping between a UWP App to a runtimebroker instance
++ Associated user accounts: can vary but typical of the logged in users and/or local service accounts 
++ start time: can vary greatly
+
+#### taskhost.exe'
+
+Generic host process for windows tasks such as scheduled tasks and so forth and runs in a continues loop listening for trigger event such as defined schedule, event or other such things
+
++ image path: System Root(C:\\Windows\\System32)
++ parent process: services.exe on version earlier then win10 and svchost for version 10+
++ Expected instanced: 1 or more
++ Associated user accounts: can vary and be owned by logged in users and/or local service accounts 
++ start time: can vary greatly
+
+
+#### lsass.exe
+
+is the "Local security subsystem service" and responsible for autenticating users on the system
+
++ image path: System Root(C:\\Windows\\System32)
++ parent process: Services.exe
++ Expected instanced: 1
++ Associated user accounts: local system
++ start time: seconds within boot
+
+
+#### winlogon.exe
+
+Handles things related to interactive user logins and logoffs as well as launching "logonUI.exe" and so forth, does not do the actually autenthication but passes the login details to "lsass.exe"
+  
++ image path: System Root(C:\\Windows\\System32)
++ parent process: smss.exe(which terminates itself and thus csrss shows no parent)
++ Expected instanced: 1 
++ Associated user accounts: local system
++ start time: seconds within boot for the first instance(session 1) and additional as needed which normally are trough remote logon or user switching.
+
+#### userinit.exe
+
+will specify the programs that is run when a user logs on, which will then run various scripts and other programs needed for the system to work such as network, explorer.exe and so forth
+
++ image path: System Root(C:\\Windows\\System32)
++ parent process: winlogon.exe
++ Expected instanced: 1
++ Associated user accounts: local system
++ start time: user logon
+
+#### explorer.exe
+
+is the windows GUI used to graphically interact with windows
+
++ image path: System Root(C:\\Windows)
++ parent process: userinit.exe(which is a instance of userinit which terminates itself afterwards)
++ Expected instanced: 1 per interactively logged on user
++ Associated user accounts: logged in users
++ start time: user logon
+
+### 
 ## SHIMCHACHE
 
 Is resposible to make sure backwards compatibilities and can contains some useful information in relations to DFIR.
@@ -110,7 +303,6 @@ https://www.sans.org/blog/control-panel-forensics-evidence-of-time-manipulation-
 + ** copying a file inherits Modified timestamps attributes from the file being copied from.
 
 
-
 ## Windows NTFS Index Attributes($I30 INDX File)
 $I30 indx files are found within various directories on a windows system
 
@@ -134,7 +326,7 @@ Also:
 
 ## WMI(Windows Management Instrumentation)
 
-(IMPORTANT NOTES: this whole topic should be re-written in the futre as like a lot of errors)
+(IMPORTANT NOTES: this whole topic should be re-written in the future as there's a lot of errors)
 
 
 WMI is microsoft's implementation of WBEM(Web-Based Enterprise Management) which in turn are based on CIM(Common Information Model) which are a set of standards for administration of devices and applications

@@ -16,7 +16,7 @@ all tools listed here comes under 3 different levels of usefulness.
 
 | Name | Author | Description 
 | --- | ----------- | -------
-| KAPA | Kroll and Eric Zimmerman | KAPE is an efficient and highly configurable triage program that will target any device or storage location, find and parse forensically useful artifacts | 
+| KAPE | Kroll and Eric Zimmerman | KAPE is an efficient and highly configurable triage program that will target any device or storage location, find and parse forensically useful artifacts | 
 | NAME | Author | Description |
 
 ### LEVEL 2

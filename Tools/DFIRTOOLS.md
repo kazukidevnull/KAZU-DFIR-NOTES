@@ -9,6 +9,9 @@ all tools listed here comes under 3 different levels of usefulness.
 
 Legend: 
 TBW: To Be Written
+## NOTES:
++ Zimmerman tools will have it's own document detailing the tools and details about how to us what in greater details in it's own document
+
 ## TOOLS
 
 
@@ -23,7 +26,16 @@ TBW: To Be Written
 | Log2Timeline | TBW | Tool designed to extract timestamps and forensic artifacts from a computer system to facilitate analysis and create what is referred to as a "Super Timeline" |
 | FLS | TBW | Used to create File System Timeline and is part of The Sleuth Kit |
 | Volatility | volatilityfundation | A advanced memory forensic framework | https://github.com/volatilityfundation/volatility |
-
+| KAPA | Kroll and Eric Zimmerman | KAPE is an efficient and highly configurable triage program that will target any device or storage location, find and parse forensically useful artifacts | 
+| USBDeviceForensics | TBW | TBW |
+| DCode| TBW | Converts data to Date/Time values |
+| analyzeMFT | dkovar | Designed to fully parse the MFT file from an NTFS Filesystem and present the result as accurately as possible in multiple formats
+| INDXParser | TBW | Used to parse $I30 files |
+| $I Parse | Jason Hale  | Used to parse $I files |
+| bmc-tools | ANSSI-FR | RDP Bitmap cache parser | 
+| SRUM-DUMP2 | Mark Baggett | SRUM Dump extracts information from the System Resource Utilization Management Database and creates a Excel spreadsheet. |
+| PyWMIPersistenceFinder.py | davidpany | used to parse WMI file |
+| RawCopy | jschicht | This a console application that copy files off NTFS volumes by using low level disk reading method | https://github.com/jschicht/RawCopy
 
 ### Tools to add later to the list above:
 
@@ -66,7 +78,7 @@ Running L2T on it's own without any extra options except for the output and inpu
 | Description | Systax | Notes |
 | ---- | ---- | ------ |
 | List available parsers | log2timeline.py --parsers list |
-| | log2timeline.py --parsers {PARSER-GROUP-NAME}{OUTPUT FILE}{TARGET} | To exclude a parser, use the "!" symbol in front of the parser you want to exlude, like "win7,\\!prefetch", the backslash is needed to escape Bash |
+| select and use a parser | log2timeline.py --parsers {PARSER-GROUP-NAME}{OUTPUT FILE}{TARGET} | To exclude a parser, use the "!" symbol in front of the parser you want to exlude, like "win7,\\!prefetch", the backslash is needed to escape Bash |
 
 can any windows path to L2T and it will parse it, due to the number of places valuable infomation can be stored however, it is open best to use a pre-compiled list for all the places that have interesting things and then supply it using the "f" switch
 
@@ -113,6 +125,19 @@ https://github.com/coderforlife/ms-compress
 volatility plugins:
 https://github.com/superponible/plugins
 
+
+### SRUM-DUMP2
+
+SRUM Dump extracts information from the System Resource Utilization Management Database and creates a Excel spreadsheet.
+The SRUM is one of the best sources for applications that have run on  your system in the last 30 days and is invaluable to your incident  investigations!
+
+To use the tool you will need a copy of the SRUM (located in c:\windows\system32\sru\srudb.dat, but locked by the OS).
+This tool also requires a SRUM_TEMPLATE that defines table and field  names. You can optionally provide the SOFTWARE registry hive and the  tool will tell you which wireless networks were in use by applications.
+
+If you are looking for a version of this tool that creates CSV files  instead of an Excel spreadsheet, dumps targeted tables or processes any  ese then check out ese2csv.  ese2csv.exe is designed specifically for csv files with the CLI user in mind.
+
+Source:
+https://github.com/MarkBaggett/srum-dump
 
 # tools and stuff to get to later
 

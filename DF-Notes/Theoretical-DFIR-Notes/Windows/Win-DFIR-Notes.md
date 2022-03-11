@@ -995,3 +995,6 @@ Normally HKEY_CURRENT_USER are used when talking about a live system while NTUSE
 
 "HARDWARE" and some other files found inside HKEY_LOCAL_MACHINE are dynamically generated at boot based on the hardware, drivers loaded and such 
 
+
+## eVENTtRANSCRIPT.db
+

@@ -1,0 +1,1 @@
+information found within this directory are things related to DFIR fundations and other general knowledge and things that is important such as how things should be done legally and properly, writing reports, how to manage things, how to prep for things and other stuff that does not involve doing the actually forensics and such but everything around it before, during and after

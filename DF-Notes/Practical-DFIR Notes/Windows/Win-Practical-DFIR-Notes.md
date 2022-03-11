@@ -34,3 +34,11 @@ If you need to go trough and match lots of users(maybe thousands) then tools tha
 this log is not visible by default in event viewer, so you have to open it in Event Viewer by going to the "%SYSTEMROOT%\system32\winevt\Logs" directory and selecting the "Microsoft-Windows-TerminalServices-RDPClient%4Operational" log
 
 Also, do not include the "dash" after the "=" sign
+
+
+
+## Accessing mounted Images from WSL
+
+Since this is about WSL i putted this here.
+
+If you need to access a Image while WSL is running and it won't appear in WSL, you can use the command `Sudo mount -t drvfs {drive-letter} /mnt/{mount point}` which will mount it and make it accessible in WSL.

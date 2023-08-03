@@ -9,14 +9,16 @@ all tools listed here comes under 3 different levels of usefulness.
 
 Legend: 
 TBW: To Be Written
+
 ## NOTES:
 + Zimmerman tools will have it's own document detailing the tools and details about how to us what in greater details in it's own document
 
 ## TOOLS
 
+TODO: Add info if the tool is a linux or windows tool
 
-| Name | Author | Description | LINKS |
-| --- | ----------- | ------- | ---- |
+| Name | Author | Description | LINKS | OS |
+| --- | ----------- | ------- | ---- | --- |
 | ExifTool | Phil Harvey | show metadata of many types of files |
 | vshadowinfo | Jaochim Metz | parse Volume Shadown Copies |
 | ewfmount | Jaochim Metz | Mounting image files such as "E" case files|
@@ -25,18 +27,19 @@ TBW: To Be Written
 | Plaso | TBW | Python-based backend engine that powers 
 | Log2Timeline | TBW | Tool designed to extract timestamps and forensic artifacts from a computer system to facilitate analysis and create what is referred to as a "Super Timeline" |
 | FLS | TBW | Used to create File System Timeline and is part of The Sleuth Kit |
-| Volatility | volatilityfundation | A advanced memory forensic framework | https://github.com/volatilityfundation/volatility |
+| Volatility | volatilityfundation | A advanced memory forensic framework | https://github.com/volatilityfundation/volatility | Linux |
 | KAPA | Kroll and Eric Zimmerman | KAPE is an efficient and highly configurable triage program that will target any device or storage location, find and parse forensically useful artifacts | 
 | USBDeviceForensics | TBW | TBW |
-| DCode| TBW | Converts data to Date/Time values |
+| DCode| TBW | Converts data to Date/Time values | Win |
 | analyzeMFT | dkovar | Designed to fully parse the MFT file from an NTFS Filesystem and present the result as accurately as possible in multiple formats
 | INDXParser | TBW | Used to parse $I30 files |
 | $I Parse | Jason Hale  | Used to parse $I files |
 | bmc-tools | ANSSI-FR | RDP Bitmap cache parser | 
 | SRUM-DUMP2 | Mark Baggett | SRUM Dump extracts information from the System Resource Utilization Management Database and creates a Excel spreadsheet. |
 | PyWMIPersistenceFinder.py | davidpany | used to parse WMI file |
-| RawCopy | jschicht | This a console application that copy files off NTFS volumes by using low level disk reading method | https://github.com/jschicht/RawCopy
-
+| RawCopy | jschicht | This a console application that copy files off NTFS volumes by using low level disk reading method | https://github.com/jschicht/RawCopy | Win |
+| Arsenal Recon | | | |
+| Nirsoft tools | | | |
 ### Tools to add later to the list above:
 
 

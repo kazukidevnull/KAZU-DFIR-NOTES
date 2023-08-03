@@ -12,7 +12,7 @@
 
 This repo is currently made public mainly for the reason to have more of my own repo on github and show that i do "something", if the notes is of any help to someone else, then that's nice of course, but not currently my main goal, similar repo related to CTI, RE, MALWARE and such are planned to be made public in the future, but first focus on the DFIR one and then move on the others later once this one is no longer such a disaster. 
 
-it takes time to write everything and some things i may know about, but not enough to write detailed notes about it from memory, thus i go trough every subject and topics to make sure i get all the important details down, yes, even the ones i feel i know very well.
+it takes time to write everything and some things i may know about, but not enough to write detailed notes about it from memory, thus i go trough every subject and topics to make sure i get all the important details down, yes, even the ones i feel i know very well, additonally, since i have seperated the "DF" and "IR" part into their own seperate directories and further divided into practical and theoretical, this is done both for better management and access reasons.
 
 -------
 

@@ -4,12 +4,9 @@ LEGEND:
 
 NOTE: due to i am still trying to figure out best way to format and display everything, a lot of what is listed are not according to reality and some will be changed or removed in the future.
 
-+ TOI= Things Of Interests
-+ -> = Right found inside Left
-+ & = in addition to the one before this symbol
++ TOI= Things Of Interests, Sometimes there will be cases where all the information within something is of investigative interests, in these cases "TOI:" will just be listed with "ALL", in cases where there's a large amount of information within something which may be of interests except for a few parts, then the not equal symbol "=!" will be used at the start of the list of things to exclude
 + DFI = Directories Found Inside
-{text}(THIS MAY CHANGE) = used to indicate information which is not fixed such as GUID, enconding or other information, Replace "text".
-+ Sometimes there will be cases where all the information within something is of investigative interests, in these cases "TOI:" will just be listed with "ALL", in cases where there's a large amount of information within something which may be of interests except for a few parts, then the not equal symbol "=!" will be used at the start of the list of things to exclude
++ {text}(THIS MAY CHANGE) = used to indicate information which is not fixed such as GUID, enconding or other information, Replace "text".
 
 ### Windows PIDs:
 
@@ -996,5 +993,5 @@ Normally HKEY_CURRENT_USER are used when talking about a live system while NTUSE
 "HARDWARE" and some other files found inside HKEY_LOCAL_MACHINE are dynamically generated at boot based on the hardware, drivers loaded and such 
 
 
-## eVENTtRANSCRIPT.db
+## EVENTTRANSCRIPT.db
 

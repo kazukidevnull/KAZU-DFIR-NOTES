@@ -44,7 +44,7 @@ Optimal Specs:
 
 + RAM:128gb
 + CPU: 
-+ SSD: 1x 2TB
++ SSD: 2x 2TB
 + HDD: 3x 5TB
 + GPU
 
@@ -69,7 +69,7 @@ Optimal Specs:
 
 + RAM: 64gb
 + CPU:i7
-+ m.2: x2 2TB SSD in double slot sata enclosure(this can either be used more RAID1 or to increase storage to 4tb)
++ m.2: x2 2TB SSD in double slot sata enclosure(this can either be used for RAID1 or to increase storage to 4tb)
 + GPU
 
 ## Response kit
